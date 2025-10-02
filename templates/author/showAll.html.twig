@@ -1,0 +1,22 @@
+{# templates/author/showAll.html.twig #}
+
+<h1>Liste des Auteurs</h1>
+
+<table border="1" cellpadding="5" cellspacing="0">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for i in list %}
+            <tr>
+                <td>{{ i.username }}</td>
+                <td>{{ i.email }}</td>
+                <td>update</td> {# ه#}
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

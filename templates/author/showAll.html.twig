@@ -15,7 +15,11 @@
             <tr>
                 <td>{{ i.username }}</td>
                 <td>{{ i.email }}</td>
-                <td>update</td> {# ه#}
+                <td>
+                    <a href="{{ path('author_details', {id: i.id}) }}">Détails</a> |
+                    <a href="{{ path('update_author', {id: i.id}) }}">Modifier</a> |
+                    <a href="{{ path('delete_author', {id: i.id}) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet auteur ?');">Supprimer</a>
+                </td>
             </tr>
         {% endfor %}
     </tbody>

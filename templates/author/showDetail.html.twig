@@ -1,0 +1,15 @@
+{# templates/author/detail.html.twig #}
+
+<h1>Détails de l'Auteur</h1>
+
+<ul>
+    <li><strong>ID :</strong> {{ author.id }}</li>
+    <li><strong>Nom d'utilisateur :</strong> {{ author.username }}</li>
+    <li><strong>Email :</strong> {{ author.email }}</li>
+</ul>
+
+<p>
+    <a href="{{ path('update_author', {id: author.id}) }}">Modifier</a> |
+    <a href="{{ path('delete_author', {id: author.id}) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet auteur ?');">Supprimer</a> |
+    <a href="{{ path('author_list') }}">Retour à la liste</a>
+</p>

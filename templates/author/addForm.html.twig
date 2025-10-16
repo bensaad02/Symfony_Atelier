@@ -1,0 +1,15 @@
+{# templates/author/addForm.html.twig #}
+
+<h1>Ajouter un Auteur</h1>
+
+{{ form_start(form) }}
+
+    {{ form_row(form.username) }}
+    {{ form_row(form.email) }}
+    {{ form_row(form.nbBooks) }}
+
+    <button type="submit">Enregistrer</button>
+
+{{ form_end(form) }}
+
+<a href="{{ path('showAll') }}">Retour à la liste des auteurs</a>

@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Search Authors by Books{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1>Search authors by number of books</h1>
+
+        {# Formulaire de recherche simple #}
+        <div class="card mb-4">
+            <div class="card-body">
+                <form method="get" class="row g-3 align-items-center">
+                    <div class="col-md-3">
+                        <label class="form-label">Min Number</label>
+                        <input type="number" name="minBooks" value="{{ minBooks ?? '' }}" 
+                               class="form-control" min="0" placeholder="0">
+                    </div>
+                    
+                    <div class="col-md-3">
+                        <label class="form-label">Max Number</label>
+                        <input type="number" name="maxBooks" value="{{ maxBooks ?? '' }}" 
+                               class="form-control" min="0" placeholder="100">
+                    </div>
+                    
+                    <div class="col-md-3">
+                        <button type="submit" class="btn btn-primary mt-3">Search</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        {# Résultats #}
+        {% if minBooks is not null and minBooks != '' and maxBooks is not null and maxBooks != '' %}
+            <div class="card">
+                <div class="card-header">
+                    <h2>Results ({{ authors|length }} authors found)</h2>
+                    <small>Number of books between {{ minBooks }} and {{ maxBooks }}</small>
+                </div>
+                
+                <div class="card-body">
+                    {% if authors|length > 0 %}
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Username</th>
+                                    <th>Email</th>
+                                    <th>Number of books</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for author in authors %}
+                                    <tr>
+                                        <td>{{ author.username }}</td>
+                                        <td>{{ author.email }}</td>
+                                        <td>
+                                            <span class="badge bg-primary">{{ author.bookCount }}</span>
+                                        </td>
+                                        <td>
+                                            <a href="#" class="btn btn-sm btn-outline-primary">Edit</a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <div class="alert alert-warning">
+                            No authors found with book count between {{ minBooks }} and {{ maxBooks }}.
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+
+        {# Bouton pour supprimer les auteurs sans livres #}
+        <div class="mt-4">
+            <a href="{{ path('authors_delete_zero_books') }}" 
+               class="btn btn-danger"
+               onclick="return confirm('Are you sure you want to delete all authors with zero books?')">
+                Delete Authors with Zero Books
+            </a>
+        </div>
+    </div>
+{% endblock %}

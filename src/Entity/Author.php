@@ -96,4 +96,23 @@ class Author
         }
         return $this;
     }
+    
+public function incrementNbBooks(): static
+{
+    $this->nb_books++;
+    return $this;
+}
+
+public function decrementNbBooks(): static
+{
+    if ($this->nb_books > 0) {
+        $this->nb_books--;
+    }
+    return $this;
+}
+
+public function __toString(): string
+{
+    return $this->username ?? '';
+}
 }

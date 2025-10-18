@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Book{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1>Edit Book</h1>
+
+    {{ form_start(form) }}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="mb-3">
+                {{ form_label(form.ref) }}
+                {{ form_widget(form.ref) }}
+            </div>
+            
+            <div class="mb-3">
+                {{ form_label(form.title) }}
+                {{ form_widget(form.title) }}
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="mb-3">
+                {{ form_label(form.published) }}  {# Changed from publicationDate to published #}
+                {{ form_widget(form.published) }} {# Changed from publicationDate to published #}
+            </div>
+            
+            <div class="mb-3">
+                {{ form_label(form.category) }}
+                {{ form_widget(form.category) }}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="mb-3">
+                {{ form_label(form.author) }}
+                {{ form_widget(form.author) }}
+            </div>
+        </div>
+    </div>
+    
+    <button type="submit" class="btn btn-success">Update</button>
+    <a href="{{ path('app_book_index') }}" class="btn btn-secondary">Cancel</a>
+    {{ form_end(form) }}
+</div>
+{% endblock %}

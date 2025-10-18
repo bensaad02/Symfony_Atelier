@@ -16,6 +16,41 @@ class AuthorRepository extends ServiceEntityRepository
         parent::__construct($registry, Author::class);
     }
 
+public function showAllQr(): array
+{
+    return $this->createQueryBuilder('a')
+        ->orderBy('a.username', 'ASC')
+        ->andWhere('a.email LIKE :condition')
+        ->setParameter('condition', '%a%')
+        ->getQuery()
+        ->getResult();
+}
+
+public function findAuthorsByBookCountRange(int $minBooks, int $maxBooks): array
+{
+    return $this->createQueryBuilder('a')
+        ->select('a.username', 'a.email', 'COUNT(b.id) as bookCount')
+        ->leftJoin('a.books', 'b')
+        ->groupBy('a.id')
+        ->having('COUNT(b.id) BETWEEN :min AND :max')
+        ->setParameter('min', $minBooks)
+        ->setParameter('max', $maxBooks)
+        ->orderBy('bookCount', 'DESC')
+        ->getQuery()
+        ->getResult();
+}
+
+
+
+
+
+
+
+
+
+
+
+
     //    /**
     //     * @return Author[] Returns an array of Author objects
     //     */

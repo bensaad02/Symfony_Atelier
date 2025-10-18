@@ -40,4 +40,32 @@ class BookRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+
+
+
+// Dans BookRepository.php
+public function findBooksBetweenDates(\DateTime $startDate, \DateTime $endDate): array
+{
+    return $this->createQueryBuilder('b')
+        ->select('b.title', 'b.publicationDate', 'b.category', 'a.username as authorName')
+        ->leftJoin('b.author', 'a')
+        ->where('b.publicationDate BETWEEN :start AND :end')
+        ->setParameter('start', $startDate)
+        ->setParameter('end', $endDate)
+        ->orderBy('b.publicationDate', 'ASC')
+        ->getQuery()
+        ->getResult();
+}
+
+public function countRomanceBooks(): int
+{
+    return $this->createQueryBuilder('b')
+        ->select('COUNT(b.id)')
+        ->where('b.category = :category')
+        ->setParameter('category', 'Romance')
+        ->getQuery()
+        ->getSingleScalarResult();
+}
+
 }

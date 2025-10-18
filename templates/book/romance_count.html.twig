@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Livres Romance{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1>Nombre de livres de catégorie "Romance"</h1>
+        <div class="alert alert-info">
+            <h2>{{ count }} livre(s) trouvé(s)</h2>
+        </div>
+        <a href="{{ path('books_list') }}" class="btn btn-primary">Retour à la liste</a>
+    </div>
+{% endblock %}

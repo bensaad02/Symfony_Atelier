@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Livres 2014-2018{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1>Liste des livres publiés entre 2014 et 2018</h1>
+        
+        {% if books|length > 0 %}
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Titre</th>
+                        <th>Date de publication</th>
+                        <th>Published</th>
+                        <th>Category</th>
+                        <th>Author</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for book in books %}
+                        <tr>
+                            <td>{{ book[0].title }}</td>
+                            <td>{{ book[0].publicationDate|date('M d, Y') }}</td>
+                            <td>
+                                {% if book[0].published %}
+                                    <span class="badge bg-success">Oui</span>
+                                {% else %}
+                                    <span class="badge bg-danger">Non</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ book[0].category }}</td>
+                            <td>{{ book.authorName }}</td>
+                            <td>
+                                <a href="{{ path('app_book_show', {id: book[0].id}) }}" class="btn btn-sm btn-info">
+                                    Show
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div class="alert alert-warning">
+                Aucun livre trouvé entre 2014-01-01 et 2018-12-31.
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

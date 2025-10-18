@@ -216,5 +216,48 @@ public function addForm(Request $request, ManagerRegistry $doctrine): Response
 
 }
 
+#[Route('/showAllqr', name: 'app_show_all_qr')]
+public function showAllqr(AuthorRepository $repository): Response
+{
+    $authors = $repository->showAllQr(); // Utilise la méthode du repository
 
+    return $this->render('author/showAll.html.twig', [
+        'authors' => $authors
+    ]);
+}
+
+
+    #[Route('/authors/search', name: 'authors_search')]
+    public function searchByBookCount(Request $request, AuthorRepository $authorRepository): Response
+    {
+        // Récupérer les paramètres de la requête GET
+        $minBooks = $request->query->get('minBooks');
+        $maxBooks = $request->query->get('maxBooks');
+        
+        $authors = [];
+        
+        // Si les deux paramètres sont présents, effectuer la recherche
+        if ($minBooks !== null && $minBooks !== '' && $maxBooks !== null && $maxBooks !== '') {
+            $authors = $authorRepository->findAuthorsByBookCountRange(
+                (int)$minBooks, 
+                (int)$maxBooks
+            );
+        }
+
+        return $this->render('author/search.html.twig', [
+            'authors' => $authors,
+            'minBooks' => $minBooks,
+            'maxBooks' => $maxBooks
+        ]);
+    }
+
+    #[Route('/authors/delete-zero-books', name: 'authors_delete_zero_books')]
+    public function deleteAuthorsWithZeroBooks(AuthorRepository $authorRepository): Response
+    {
+        $deletedCount = $authorRepository->deleteAuthorsWithZeroBooks();
+        
+        $this->addFlash('success', $deletedCount . ' auteurs sans livres ont été supprimés.');
+
+        return $this->redirectToRoute('authors_search');
+    }
 }
